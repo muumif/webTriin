@@ -56,6 +56,9 @@ export async function GET({ url }: any) {
 					"status.at_store": false
 				});
 				break;
+			case "total":
+				count.total = await orders.countDocuments({});
+				break;
 		}
 		return new Response(JSON.stringify({ count: count }));
 	}

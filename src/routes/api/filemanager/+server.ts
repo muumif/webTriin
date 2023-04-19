@@ -3,6 +3,7 @@ import type { OrderModel } from "src/types/order";
 import XLSX from "xlsx";
 import { appendFile } from "fs/promises";
 import type { client } from "../orders/+server";
+import { cwd } from "process";
 
 const workSheetColumnName = [
 	"ID",
@@ -143,7 +144,7 @@ export async function POST({ request }: any) {
 			await file.stream().getReader().read()
 		).value as Uint8Array
 	);
-	const workbook = XLSX.readFile(`./public/sheets/upload_${file.name}`);
+	const workbook = XLSX.readFile(`${cwd()}/public/sheets/upload_${file.name}`);
 
 	let sheet_name_list = workbook.SheetNames;
 	const orders_sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);

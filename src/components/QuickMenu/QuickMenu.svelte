@@ -1,21 +1,22 @@
 <script lang="ts">
-	import { all_count } from "./store";
-	import { orders, counts } from "../routes/orders/store";
-	import { client } from "./store";
+	import { all_count } from "../store";
+	import { orders, counts } from "../../routes/orders/store";
+	import { items } from "../../routes/items/store";
+	import { client } from "../store";
 	import {
 		Button,
 		Modal,
 		Label,
 		Input,
-		Textarea,
 		Spinner,
 		SpeedDialButton,
 		SpeedDial,
 		Toggle,
-		Fileupload
+		Select,
 	} from "flowbite-svelte";
 	import { DocumentPlus, CloudArrowDown, CloudArrowUp } from "svelte-heros-v2";
 	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
 
 	let formModal = false;
 	let downloadModal = false;
@@ -24,6 +25,8 @@
 	let upload_loading = false;
 
 	let fileVar: FileList;
+
+	let selectedItem: any;
 
 	const downloads = {
 		unpacked: false,
@@ -50,6 +53,9 @@
 		const res_get_count = await fetch("/api/orders?count=all", {
 			method: "GET"
 		});
+		const res_get_count_all = await fetch("/api/orders?count=total", {
+			method: "GET"
+		});
 		const data = await res_get.json();
 		const data_count = await res_get_count.json();
 		$orders = data["orders"];
@@ -59,10 +65,7 @@
 		$client.client_name = "";
 		$client.client_nr = "";
 		$client.items = "";
-		const values = Object.values(data_count.count as Object);
-		$all_count = values.reduce((accumulator: number, value: number) => {
-			return accumulator + value;
-		}, 0);
+		$all_count = await res_get_count_all.json();
 	}
 
 	async function downloadOrders() {
@@ -111,6 +114,18 @@
 		upload_loading = false;
 		uploadModal = false;
 	}
+	let items_select: [{value: string, name: string}];
+	onMount(async () => {
+		const res = await fetch("/api/items", {
+			method: "GET"
+		});
+		const data = await res.json();
+		items_select = [{value: String(data.items[0].item_id), name: data.items[0].item_name}];
+		for (let i = 1; i < data.items.length; i++) {
+			items_select.push({value: String(data.items[i].item_id), name: data.items[i].item_name});
+		}
+		console.log(items_select);
+	})
 </script>
 
 <Modal bind:open={formModal} size="xs" autoclose={false}>
@@ -128,6 +143,10 @@
 					bind:value={$client.client_name}
 					required />
 			</Label>
+			<Label>
+				<span>Toode</span>
+				<Select class="mt-2" items={items_select} bind:value={selectedItem} required />
+			</Label>
 			<Label class="space-y-2">
 				<span>Telefoni Number</span>
 				<Input
@@ -137,14 +156,7 @@
 					bind:value={$client.client_nr}
 					required />
 			</Label>
-			<Label class="space-y-1 mb-2">
-				<span>Paki sisu</span>
-				<Textarea
-					rows="2"
-					placeholder="Padi, Tool"
-					bind:value={$client.items}
-					required />
-			</Label>
+			<Button></Button>
 			<Button type="submit" class="w-full">Lisa</Button>
 		</form>
 	{:else}

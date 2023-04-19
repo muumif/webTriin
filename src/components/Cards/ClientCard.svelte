@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { all_count } from "./store";
-	import { orders, counts } from "../routes/orders/store";
+	import { all_count } from "../store";
+	import { orders, counts } from "../../routes/orders/store";
 	import {
 		Card,
 		ButtonGroup,
@@ -74,7 +74,6 @@
 	}
 
 	async function deleteOrder() {
-		console.log(internal_id);
 		confirm_order_modal_loading = true;
 		await fetch("/api/orders", {
 			method: "DELETE",
@@ -147,7 +146,7 @@
 	}
 </script>
 
-<Card class="mb-4" padding="md">
+<Card class="mb-4 mr-2" padding="md">
 	<div class="mb-2">
 		<div class="relative">
 			<h3

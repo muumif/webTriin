@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { orders, counts } from "./store";
-	import QuickMenu from "../../components/QuickMenu.svelte";
-	import ClientCard from "../../components/ClientCard.svelte";
-	import { Tabs, TabItem, Badge } from "flowbite-svelte";
+	import QuickMenu from "../../components/QuickMenu/QuickMenu.svelte";
+	import ClientCard from "../../components/Cards/ClientCard.svelte";
+	import { Tabs, TabItem, Badge, Search, Button } from "flowbite-svelte";
 	import Navbar from "../../components/Navbar.svelte";
 	export let data;
 
@@ -16,15 +16,29 @@
 		const data = await res.json();
 		$orders = data["orders"];
 	}
+
+	let search_query = "";
+
+	async function search() {
+            const res = await fetch(`/api/search/orders?search=${search_query}`, {
+			method: "GET"
+		});
+		const data = await res.json();	
+		$orders = data["orders"];
+	}
 </script>
 
 <svelte:head>
 	<title>Tellimused</title>
 </svelte:head>
 
-<Navbar />
 
-<div class="w-full mb-20" />
+<div class="top-0 right-2 absolute w-2/6">
+      <Search class="mt-2" bind:value={search_query} on:change={search} placeholder="Nime järgi otsing">  
+            <Button on:click={search}>Otsi</Button>
+      </Search>
+</div>
+<div class="mb-20 w-full h-1"/>
 
 <Tabs
 	style="underline"
@@ -175,4 +189,4 @@
 	</TabItem>
 </Tabs>
 
-<QuickMenu />
+<QuickMenu/>

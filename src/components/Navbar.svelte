@@ -21,14 +21,11 @@
 	};
 
 	onMount(async () => {
-		const res = await fetch("/api/orders?count=all", {
+		const res = await fetch("/api/orders?count=total", {
 			method: "GET"
 		});
 		const data = await res.json();
-		const values = Object.values(data.count as Object);
-		$all_count = values.reduce((accumulator: number, value: number) => {
-			return accumulator + value;
-		}, 0);
+		$all_count = data.count.total;
 	});
 </script>
 
