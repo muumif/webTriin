@@ -1,6 +1,6 @@
 <script>
-	import Navigation from '$lib/components/Navigation.svelte';
-	import { AppBar, AppShell } from '@skeletonlabs/skeleton';
+	import Navigation from "$lib/components/Navigation.svelte";
+	import { AppBar, AppShell } from "@skeletonlabs/skeleton";
 </script>
 
 <AppShell slotSidebarLeft="w-42 bg-surface-500/10">

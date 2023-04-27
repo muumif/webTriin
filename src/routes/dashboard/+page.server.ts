@@ -1,5 +1,5 @@
-import { redirect, type Actions, fail } from '@sveltejs/kit';
-import { auth } from '$lib/server/lucia';
+import { redirect, type Actions, fail } from "@sveltejs/kit";
+import { auth } from "$lib/server/lucia";
 
 export const load = async ({ locals, url }) => {
 	const user = locals.user;
@@ -18,6 +18,6 @@ export const actions: Actions = {
 		if (!session) return fail(401);
 		await auth.invalidateSession(session.sessionId);
 		locals.auth.setSession(null);
-		throw redirect(302, '/');
+		throw redirect(302, "/");
 	}
 };

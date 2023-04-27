@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { toastStore } from '@skeletonlabs/skeleton';
-	import type { ToastSettings } from '@skeletonlabs/skeleton';
+	import { toastStore } from "@skeletonlabs/skeleton";
+	import type { ToastSettings } from "@skeletonlabs/skeleton";
 
 	export let message: string;
 	export let background:
-		| 'variant-filled-error'
-		| 'variant-filled-success'
-		| 'variant-filled-warning'
-		| 'variant-filled-primary'
+		| "variant-filled-error"
+		| "variant-filled-success"
+		| "variant-filled-warning"
+		| "variant-filled-primary"
 		| string;
 	const t: ToastSettings = {
 		message: message,
