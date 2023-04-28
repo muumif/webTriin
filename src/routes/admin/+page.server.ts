@@ -118,5 +118,40 @@ export const actions: Actions = {
 				messageBackground: "variant-filled-error"
 			};
 		}
+	},
+	updatePassword: async ({ request }) => {
+		const form = await request.formData();
+		const username = form.get("username");
+		const password = form.get("password");
+		if (!password || !username || typeof password != "string" || typeof username != "string")
+			return {
+				message: "Invalid data",
+				messageBackground: "variant-filled-error"
+			};
+		try {
+			const userQuery = await prisma.authUser.findFirst({
+				where: {
+					username: username
+				}
+			});
+			if (!userQuery)
+				return {
+					message: "User not found",
+					messageBackground: "variant-filled-error"
+				};
+			await auth.invalidateAllUserSessions(userQuery.id);
+			const user = await auth.updateKeyPassword("username", username, password);
+			
+			return {
+				message: `User ${username} password changed successfully!`,
+				messageBackground: "variant-filled-primary"
+			};
+		} catch (error) {
+			console.error(error);
+			return {
+				message: "Internal server error",
+				messageBackground: "variant-filled-error"
+			};
+		}
 	}
 };

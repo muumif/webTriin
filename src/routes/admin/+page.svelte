@@ -80,20 +80,20 @@
 			use:enhance
 			method="post"
 			class="border-2 rounded-xl p-6 bg-surface-600/50 shadow-2xl border-primary-500/50"
-			action="?/updatepassword">
+			action="?/updatePassword">
 			<div class="inline-grid gird-cols-1 gap-1">
 				<span>Update user password</span>
 				<div class="p-2">
 					<input
 						type="text"
-						name="userId"
+						name="username"
 						class="input"
-						placeholder="User ID"
+						placeholder="Username"
 						required />
 				</div>
 				<div class="p-2">
 					<input
-						type="text"
+						type="password"
 						name="password"
 						class="input"
 						placeholder="Password"
@@ -125,7 +125,8 @@
 			</div>
 		</form>
 	</div>
-	<div class="m-4 fixed top-0 right-0">
-		<Table source={tableSource} />
-	</div>
+</div>
+
+<div class="inline-grid m-4 border-2 rounded-xl border-primary-500/50 shadow-2xl">
+	<Table source={tableSource} />
 </div>
