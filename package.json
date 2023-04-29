@@ -37,6 +37,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@floating-ui/dom": "^1.2.7",
     "@lucia-auth/adapter-prisma": "^2.0.0",
     "@prisma/client": "^4.13.0"
   }

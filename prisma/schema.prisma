@@ -47,10 +47,9 @@ model AuthKey {
 model Category {
   id    Int    @id @default(autoincrement())
   name  String @unique
-  slug  String
   items Item[]
 
-  @@index([name, slug])
+  @@index([name])
   @@map("category")
 }
 
@@ -73,8 +72,11 @@ model Item {
 model Order {
   id        Int      @id @default(autoincrement())
   name      String
-  phone     String
+  phone     Int
   email     String?
+  packed     Boolean  @default(false)
+  order_card Boolean @default(false)
+  shipped    Boolean @default(false)
   items     Item[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

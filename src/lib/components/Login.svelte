@@ -39,5 +39,5 @@
 		background={form.message === "Edukalt sisse logitud"
 			? "variant-filled-primary"
 			: "variant-filled-error"}
-		timeout={2000} />
+		/>
 {/if}
